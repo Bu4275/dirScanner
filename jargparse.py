@@ -63,3 +63,11 @@ if not source:
         print '[Please set --source option OR use --help get some help]'
         sys.exit(0)
     source = File_Name
+
+
+def main():
+    if ask('[Directly download the latest version of worldlist file ?]'):
+        dict_update()
+
+if __name__ == '__name__':
+    main()
