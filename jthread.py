@@ -1,14 +1,22 @@
 from threading import *
+import urllib2
+import Queue
+
+threadPool = Queue.Queue(0)
+
+condition = Condition()
+
 
 
 class JThread(Thread):
-    def __init__(self, condition):
+    def __init__(self, condition, target, port):
         Thread.__init__(self)
         self.cond = condition
-
+        self.target = target
+        self.port = port
     def run(self):
         while True:
-            global target, cnt
+            global target
 
             each = threadPool.get()
             
@@ -17,7 +25,7 @@ class JThread(Thread):
             elif '.' not in each:
                 each = each + '/'
                 
-            url = '%s/%s' % (target, each)
+            url = '%s:%s/%s' % (self.target, self.port, each)
             
             try:
                 res = urllib2.urlopen(url)
@@ -27,7 +35,6 @@ class JThread(Thread):
                     print '[-][%s] %s\n' % (err.code, url),
                     
             self.cond.acquire()
-            cnt += 1
             self.cond.release()
             threadPool.task_done()
 

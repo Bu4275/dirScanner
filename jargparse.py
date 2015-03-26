@@ -43,11 +43,7 @@ parser.add_argument('-t', '--thread', help='How many thread do you want , [100]'
 
 args = parser.parse_args()
 
-target =  args.URL
-port = args.port or 80
-THREAD_COUNT = int(args.thread or 100)
 source = args.source
-
 
 if not source:
     if os.path.exists(File_Name):
