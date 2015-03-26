@@ -1,5 +1,8 @@
 ***Make you own dirBuster by yourself.***
 
+
+***自己的 dirBuster 自己做。***
+
 ---
 
 # Introduction
@@ -20,8 +23,6 @@ You can get more help with *--help*
 >2015/03/26
 * NEW! Download the latest version of dictionary which provided by author with your permission.
 
-
-***自己的 dirBuster 自己做。***
 
 ---
 
