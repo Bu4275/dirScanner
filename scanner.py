@@ -1,36 +1,32 @@
 #!/usr/bin/python2
-
 from jargparse import *
-import urllib2
-import Queue
+from jthread import *
+
+
+target =  args.URL
+port = args.port or 80
+THREAD_COUNT = int(args.thread or 100)
 
 
 if target.endswith('/'):
     target = target.strip('/')
     
-threadPool = Queue.Queue(0)
-condition = Condition()
-cnt = 0
-
-
-
-def main():    
+def main():
     with open(source, 'r') as f:
         txt = f.readlines()
 
     txt = [each.strip('\n') for each in txt if '\n' in each]
 
-    for each in txt:
-        threadPool.put(each)
+    map(threadPool.put, txt)
 
-    for i in xrange(THREAD_COUNT):
-        T = JThread(condition)
+    for _ in xrange(THREAD_COUNT):
+        T = JThread(condition, target, port)
         T.setDaemon(True)
         T.start()
     
     threadPool.join()
     
-    print 'Total :',cnt
+    print 'Total :',len(txt)
 
 if __name__ == '__main__':
     main()
