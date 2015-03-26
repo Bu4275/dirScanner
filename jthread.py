@@ -1,6 +1,8 @@
 from threading import *
 import urllib2
+import socket
 import Queue
+import sys
 
 threadPool = Queue.Queue(0)
 
@@ -28,15 +30,17 @@ class JThread(Thread):
             url = '%s:%s/%s' % (self.target, self.port, each)
             
             try:
-                res = urllib2.urlopen(url)
+                res = urllib2.urlopen(url, timeout=3)
                 print '[+][%s] %s\n' % (res.code, url),
-            except urllib2.HTTPError, err:
+            except urllib2.HTTPError as err:
                 if err.code != 404:
                     print '[-][%s] %s\n' % (err.code, url),
-                    
-            self.cond.acquire()
-            self.cond.release()
-            threadPool.task_done()
+            except (socket.timeout, urllib2.URLError) as err:
+                print '[Timeout][%s]' % (url)
+            finally:
+                self.cond.acquire()
+                self.cond.release()
+                threadPool.task_done()
 
 def main():
     pass

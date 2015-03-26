@@ -26,7 +26,7 @@ def main():
     
     threadPool.join()
     
-    print 'Total :',len(txt)
+    print 'Tried : ',len(txt)
 
 if __name__ == '__main__':
     main()

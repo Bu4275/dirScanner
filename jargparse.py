@@ -16,11 +16,11 @@ def dict_update():
     try:
         urllib.urlretrieve(SRC_URL, File_Name)
         print '[Download completed]'
-        print '[Now moving forward]'
     except err:
         print '[Unexpected Error : %s]' % sys.exc_info[0]
 
 def dict_version_check():
+    print '[Checking version]'
     with open(File_Name) as f:
         locver = f.readline().strip('\n')
     remver = urllib.urlopen(VER_URL).readline().strip('\n')
@@ -48,9 +48,8 @@ source = args.source
 if not source:
     if os.path.exists(File_Name):
         print '[Detected worldlist.txt]'
-        print '[Checking version]'
         if dict_version_check():
-            if not ask('[Progress with outdated worldlist file ?]'):
+          if not ask('[Progress with existed worldlist file ?]'):  
                 print '[Please set source option OR use --help get some help]'
                 sys.exit(0)
     elif ask('[Prefer to donwload the latest version of worldlist file ?]'):
