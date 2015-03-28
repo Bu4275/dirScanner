@@ -6,7 +6,7 @@ from jthread import *
 target =  args.URL
 port = args.port or 80
 THREAD_COUNT = int(args.thread or 100)
-
+verbose = args.verbose or False
 
 if target.endswith('/'):
     target = target.strip('/')
