@@ -40,6 +40,7 @@ parser.add_argument('URL', help='The target which you want to play with')
 parser.add_argument('-src', '--source', help='It will be downloaded automatically if you did not have one')
 parser.add_argument('-p','--port', help='The port of your target , [80]')
 parser.add_argument('-t', '--thread', help='How many thread do you want , [100]')
+parser.add_argument('-v', '--verbose', help='Show more detail message even Not Found')
 
 args = parser.parse_args()
 
