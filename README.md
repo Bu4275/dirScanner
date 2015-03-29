@@ -13,7 +13,7 @@ Usage: scanner.py <URL> [-src SOURCE of Dictionary [-p PORT [-t THREAD [-v ]]]]
 **Example:**
 `scanner.py http://localhost -src DICT.txt -p 80 -t 200`
 
-use -v if you want to get more detail message
+use -v if you need more detail messages
 
 ---
 
