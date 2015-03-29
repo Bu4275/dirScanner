@@ -1,30 +1,32 @@
-from threading import *
+import threading
+import requests
 import urllib2
 import socket
 import Queue
 import sys
 
-threadPool = Queue.Queue(0)
 
-condition = Condition()
+jobq = Queue.Queue(0)
+
+condition = threading.Condition()
 
 found = []
 
-PUSHBACK = []
+errlist = []
 
-class JThread(Thread):
+class JThread(threading.Thread):
     def __init__(self, condition, target, port, verbose=False):
-        Thread.__init__(self)
+        threading.Thread.__init__(self)
         self.cond = condition
         self.target = target
         self.port = port
-        self.counter = 3
         self.verbose = verbose
+        
     def run(self):
         while True:
-            global found, PUSHBACK
+            global found, errlist
             
-            each = threadPool.get()
+            each = jobq.get()
 
             if each.endswith('/'):
                 each = each.strip('/') + '/'
@@ -35,23 +37,36 @@ class JThread(Thread):
                 
             url = '%s:%s/%s' % (self.target, self.port, each)
 
+            self.cond.acquire()
             
             try:
-                res = urllib2.urlopen(url, timeout=10)
-                print '[+][%s] %s\n' % (res.code, url),
-                found.append(url)
-            except urllib2.HTTPError as err:
-                if self.verbose is True:
-                    print '[-][%s] %s\n' % (err.code, url),
-                elif err.code != 404:
-                    print '[-][%s] %s\n' % (err.code, url),
-                    found.append(url)
-            except (socket.timeout, urllib2.URLError) as err:
-                print 'PUSHBACK %s\n' % (each),
-                PUSHBACK.append(each)
-            self.cond.acquire()
+                res = requests.get(url, timeout=5)
+
+                if res.ok:
+                    msg = '[+][%s] %s\n' % (res.status_code, url)
+                    if res.history:
+                        msg = '[-][%s] %s\n' % (res.history[0].status_code, url)
+                    
+                elif not res.ok:
+                    msg = '[-][%s] %s\n' % (res.status_code, url)
+                    
+                if res.status_code != 404:
+                    found.append(each)
+                    print msg
+                    
+            except requests.exceptions.Timeout as err:
+                print 'Timeout'
+                errlist.append('Timeout ' + each)
+                
+            except socket.timeout as err:
+                errlist.append('Socket Timeout ' + each)
+
+            except requests.exceptions.RequestException as err:
+                errlist.append('Unexpect Exception ' + str(err))
+
+            
             self.cond.release()
-            threadPool.task_done()
+            jobq.task_done()
             
 def main():
     pass
