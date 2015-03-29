@@ -1,6 +1,5 @@
 import threading
 import requests
-import urllib2
 import socket
 import Queue
 import sys
@@ -18,6 +17,8 @@ class JThread(threading.Thread):
     def __init__(self, condition, target, port, verbose=False):
         threading.Thread.__init__(self)
         self.cond = condition
+        if target.endswith('/'):
+            target = target.strip('/')
         self.target = target
         self.port = port
         self.verbose = verbose
