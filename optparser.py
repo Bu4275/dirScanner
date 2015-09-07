@@ -4,7 +4,7 @@ import urllib
 import argparse
 
 File_Name = 'wordlist.txt'
-SRC_URL = 'http://ucgjhe.github.io/note/misc/dict/wordlist.txt'
+SRC_URL = 'http://ucgjhe.github.io/note/misc/dict/%s' % File_Name
 VER_URL = 'http://ucgjhe.github.io/note/misc/dict/version'
 
 
@@ -56,7 +56,7 @@ if not source:
     elif ask('[Prefer to donwload the latest version of worldlist file ?]'):
         dict_update()
     else:
-        print '[Please set --source option OR use --help get some help]'
+        print '[Please set --source option OR use --help to get some help]'
         sys.exit(0)
     source = File_Name
 
