@@ -3,8 +3,8 @@ import sys
 import urllib
 import argparse
 
-File_Name = 'worldlist.txt'
-SRC_URL = 'http://ucgjhe.github.io/note/misc/dict/worldlist.txt'
+File_Name = 'wordlist.txt'
+SRC_URL = 'http://ucgjhe.github.io/note/misc/dict/wordlist.txt'
 VER_URL = 'http://ucgjhe.github.io/note/misc/dict/version'
 
 
@@ -50,12 +50,12 @@ if not source:
     if os.path.exists(File_Name):
         print '[Detected worldlist.txt]'
         if dict_version_check():
-          if not ask('[Progress with existed worldlist file ?]'):  
+          if not ask('[Progress with existed worldlist file ?]'):
                 print '[Please set source option OR use --help get some help]'
                 sys.exit(0)
     elif ask('[Prefer to donwload the latest version of worldlist file ?]'):
         dict_update()
-    else:    
+    else:
         print '[Please set --source option OR use --help get some help]'
         sys.exit(0)
     source = File_Name
