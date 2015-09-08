@@ -22,7 +22,7 @@ use -v if you need more detail messages
 
 * FIX! Remove redundant code.
 
-* FIX! You can use verbose option correctly.
+* FIX! You can use verbose option correctly now.
 
 ***2015/03/26***
 
