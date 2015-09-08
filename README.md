@@ -18,6 +18,12 @@ use -v if you need more detail messages
 ---
 
 ### Change log
+***2015/09/08***
+
+* FIX! Remove redundant code.
+
+* FIX! You can use verbose option correctly.
+
 ***2015/03/26***
 
 * NEW! You will be able to download the dictionary file provided by author if you want.
