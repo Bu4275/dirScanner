@@ -9,9 +9,9 @@ jobq = Queue.Queue(0)
 
 condition = threading.Condition()
 
-found = []
+# found = []
 
-errlist = []
+# errlist = []
 
 class JThread(threading.Thread):
     def __init__(self, condition, target, port, verbose):
@@ -38,8 +38,8 @@ class JThread(threading.Thread):
                 print msg
 
             elif res.status_code != 404:
-                # found.append(url.split('/')[-1])
                 print msg
+                # found.append(url.split('/')[-1])
 
     def run(self):
         while True:

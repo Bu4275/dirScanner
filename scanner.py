@@ -1,6 +1,7 @@
 #!/usr/bin/python2
+import multiThread as mthread
 import optparser as opt
-import multiThread
+import sys
 
 target =  opt.args.URL
 port = opt.args.port
@@ -13,9 +14,9 @@ if target.endswith('/'):
 def isOnline(url, port):
     aim = '%s:%s/' % (url, port)
     try:
-        res = multiThread.requests.head(aim)
+        res = mthread.requests.head(aim)
 
-    except multiThread.requests.ConnectionError as err:
+    except mthread.requests.ConnectionError as err:
         return False
 
     return True
@@ -23,23 +24,23 @@ def isOnline(url, port):
 def main():
     if not isOnline(target, port):
         print 'Target is down.'
-        multiThread.sys.exit(0)
+        sys.exit(0)
 
     with open(opt.source, 'r') as f:
         txt = f.readlines()
 
     txt = [each.strip('\n') for each in txt if '\n' in each]
 
-    map(multiThread.jobq.put, txt)
+    map(mthread.jobq.put, txt)
 
     for _ in xrange(THREAD_COUNT):
-        T = multiThread.JThread(multiThread.condition, target, port, verbose)
+        T = mthread.JThread(mthread.condition, target, port, verbose)
         T.setDaemon(True)
         T.start()
 
-    multiThread.jobq.join()
+    mthread.jobq.join()
 
-    print 'Tried : ',len(txt)
+    print 'Tried : ', len(txt)
 
 if __name__ == '__main__':
     main()

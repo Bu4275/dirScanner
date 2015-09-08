@@ -27,8 +27,7 @@ def dict_version_check():
     if remver > locver:
         print '[Remote version : %s]' % remver
         print '[Local  version : %s]' % locver
-        update = ask('[Your worldlist file is out of date, wanna update it ?]')
-        if update:
+        if ask('[Your wordlist file is out of date, wanna update it ?]'):
             dict_update()
             return True
     else:
@@ -48,22 +47,22 @@ source = args.source
 
 if not source:
     if os.path.exists(File_Name):
-        print '[Detected worldlist.txt]'
+        print '[Detected wordlist.txt]'
         if dict_version_check():
-          if not ask('[Progress with existed worldlist file ?]'):
-                print '[Please set source option OR use --help get some help]'
+          if not ask('[Progress with existed wordlist file ?]'):
+                print '[Then You should specify a wordlist]'
                 sys.exit(0)
-    elif ask('[Prefer to donwload the latest version of worldlist file ?]'):
+
+    elif ask('[Wanna donwload the latest version of wordlist file ?]'):
         dict_update()
+
     else:
         print '[Please set --source option OR use --help to get some help]'
         sys.exit(0)
     source = File_Name
 
-
 def main():
-    if ask('[Directly download the latest version of wordlist file ?]'):
-        dict_update()
+    pass
 
 if __name__ == '__name__':
     main()
