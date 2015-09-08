@@ -62,7 +62,7 @@ if not source:
 
 
 def main():
-    if ask('[Directly download the latest version of worldlist file ?]'):
+    if ask('[Directly download the latest version of wordlist file ?]'):
         dict_update()
 
 if __name__ == '__name__':

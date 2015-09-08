@@ -10,7 +10,7 @@ verbose = opt.args.verbose
 if target.endswith('/'):
     target = target.strip('/')
 
-def probe(url, port):
+def isOnline(url, port):
     aim = '%s:%s/' % (url, port)
     try:
         res = multiThread.requests.head(aim)
@@ -21,7 +21,7 @@ def probe(url, port):
     return True
 
 def main():
-    if not probe(target, port):
+    if not isOnline(target, port):
         print 'Target is down.'
         multiThread.sys.exit(0)
 
@@ -47,4 +47,5 @@ if __name__ == '__main__':
     print "%s:%s" % (target, port)
     print THREAD_COUNT
     print verbose
+    print opt.source
     '''

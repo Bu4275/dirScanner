@@ -38,12 +38,12 @@ class JThread(threading.Thread):
                 print msg
 
             elif res.status_code != 404:
-                found.append(each)
+                # found.append(url.split('/')[-1])
                 print msg
 
     def run(self):
         while True:
-            global found, errlist
+            # global found, errlist
 
             each = jobq.get()
 
@@ -55,14 +55,16 @@ class JThread(threading.Thread):
                 self.wget(url)
 
             except requests.exceptions.Timeout as err:
-                print 'Timeout'
-                errlist.append('Timeout ' + each)
+                print 'requests Timeout'
+                # errlist.append('Timeout ' + each)
 
             except socket.timeout as err:
-                errlist.append('Socket Timeout ' + each)
+                print 'socket Timeout'
+                # errlist.append('Socket Timeout ' + each)
 
             except requests.exceptions.RequestException as err:
-                errlist.append('Unexpect Exception ' + str(err))
+                print 'Unexpected exeception'
+                # errlist.append('Unexpect Exception ' + str(err))
 
             self.cond.release()
             jobq.task_done()
