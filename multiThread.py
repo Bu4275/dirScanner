@@ -14,7 +14,7 @@ found = []
 errlist = []
 
 class JThread(threading.Thread):
-    def __init__(self, condition, target, port, verbose=False):
+    def __init__(self, condition, target, port, verbose):
         threading.Thread.__init__(self)
         self.cond = condition
         self.target = target
@@ -42,7 +42,10 @@ class JThread(threading.Thread):
                 elif not res.ok:
                     msg = '[-][%s] %s\n' % (res.status_code, url)
 
-                if res.status_code != 404:
+                if self.verbose:
+                    print msg
+
+                elif res.status_code != 404:
                     found.append(each)
                     print msg
 

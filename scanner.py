@@ -3,9 +3,9 @@ import optparser as opt
 import multiThread
 
 target =  opt.args.URL
-port = opt.args.port or 80
-THREAD_COUNT = int(opt.args.thread or 100)
-verbose = opt.args.verbose or False
+port = opt.args.port
+THREAD_COUNT = int(opt.args.thread)
+verbose = opt.args.verbose
 
 if target.endswith('/'):
     target = target.strip('/')
@@ -19,7 +19,7 @@ def main():
     map(multiThread.jobq.put, txt)
 
     for _ in xrange(THREAD_COUNT):
-        T = multiThread.JThread(multiThread.condition, target, port)
+        T = multiThread.JThread(multiThread.condition, target, port, verbose)
         T.setDaemon(True)
         T.start()
 
@@ -29,3 +29,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+    '''
+    print "%s:%s" % (target, port)
+    print THREAD_COUNT
+    print verbose
+    '''
