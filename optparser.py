@@ -1,7 +1,7 @@
-import os
-import sys
-import urllib
 import argparse
+import urllib
+import sys
+import os
 
 File_Name = 'wordlist.txt'
 SRC_URL = 'http://ucgjhe.github.io/note/misc/dict/%s' % File_Name
@@ -40,7 +40,7 @@ parser.add_argument('URL', help='The target which you want to play with')
 parser.add_argument('-src', '--source', help='It will be downloaded automatically if you did not have one')
 parser.add_argument('-p','--port', help='The port of your target , [80]')
 parser.add_argument('-t', '--thread', help='How many thread do you want , [100]')
-parser.add_argument('-v', '--verbose', help='Show more detail message even Not Found')
+parser.add_argument('-v', '--verbose',action="store_true" , help='Show more detail message even Not Found', default=False)
 
 args = parser.parse_args()
 

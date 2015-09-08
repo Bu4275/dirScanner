@@ -16,8 +16,6 @@ errlist = []
 class JThread(threading.Thread):
     def __init__(self, condition, target, port, verbose=False):
         threading.Thread.__init__(self)
-        if target.endswith('/'):
-            target = target.strip('/')
         self.cond = condition
         self.target = target
         self.port = port
@@ -28,13 +26,6 @@ class JThread(threading.Thread):
             global found, errlist
 
             each = jobq.get()
-
-            if each.endswith('/'):
-                each = each.strip('/') + '/'
-            elif each.startswith('.'):
-                each = each + '/'
-            elif '.' not in each:
-                each = each + '/'
 
             url = '%s:%s/%s' % (self.target, self.port, each)
 

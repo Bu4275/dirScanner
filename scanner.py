@@ -2,7 +2,6 @@
 import optparser as opt
 import multiThread
 
-
 target =  opt.args.URL
 port = opt.args.port or 80
 THREAD_COUNT = int(opt.args.thread or 100)
