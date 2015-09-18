@@ -12,7 +12,10 @@ if target.endswith('/'):
     target = target.strip('/')
 
 def isOnline(url, port):
-    aim = '%s:%s/' % (url, port)
+    if port:
+        aim = '%s:%s/' % (url, port)
+    else:
+        aim = url + '/'
     try:
         res = mthread.requests.head(aim)
 

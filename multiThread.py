@@ -31,6 +31,8 @@ class JThread(threading.Thread):
             if res.history:
                 msg = '[-][%s] %s\n' % (res.history[0].status_code, url)
 
+            print msg
+
         elif not res.ok:
             msg = '[-][%s] %s\n' % (res.status_code, url)
 
@@ -47,7 +49,10 @@ class JThread(threading.Thread):
 
             each = jobq.get()
 
-            url = '%s:%s/%s' % (self.target, self.port, each)
+            if self.port:
+                url = '%s:%s/%s' % (self.target, self.port, each)
+            else:
+                url = '%s/%s' % (self.target, each)
 
             self.cond.acquire()
 
