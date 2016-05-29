@@ -36,12 +36,8 @@ class JThread(threading.Thread):
         elif not res.ok:
             msg = '[-][%s] %s\n' % (res.status_code, url)
 
-            if self.verbose:
+            if self.verbose or res.status_code != 404:
                 print msg
-
-            elif res.status_code != 404:
-                print msg
-                # found.append(url.split('/')[-1])
 
     def run(self):
         while True:
@@ -60,11 +56,11 @@ class JThread(threading.Thread):
                 self.wget(url)
 
             except requests.exceptions.Timeout as err:
-                print 'requests Timeout'
+                print 'requests Timeout for %s\n' % url
                 # errlist.append('Timeout ' + each)
 
             except socket.timeout as err:
-                print 'socket Timeout'
+                print 'socket Timeout for %s\n' % url
                 # errlist.append('Socket Timeout ' + each)
 
             except requests.exceptions.RequestException as err:
